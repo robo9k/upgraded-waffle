@@ -10,6 +10,10 @@ jobs:
           sudo apt-get update
           sudo apt-get install libmagic1 libmagic-dev pkg-config
 
+      - run: |
+          which pkg-config
+          pkg-config --version
+
       - run: pkg-config --debug --validate libmagic
 
   macos:
@@ -18,7 +22,12 @@ jobs:
     steps:
       - run: |
           brew update
-          brew install libmagic
+          brew install libmagic pkg-config
+
+      - run: |
+          which pkg-config
+          pkg-config --version
+          brew --version
 
       - run: pkg-config --debug --validate libmagic
 
@@ -30,4 +39,9 @@ jobs:
             vcpkg install update
             vcpkg install libmagic
 
-        - run: vcpkg depend-info libmagic
+        - run: |
+            vcpkg version
+
+        - run: |
+            vcpkg search libmagic
+            vcpkg depend-info libmagic
