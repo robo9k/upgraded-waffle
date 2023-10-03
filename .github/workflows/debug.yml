@@ -1,0 +1,33 @@
+on:
+  workflow_dispatch: 
+
+jobs:
+  ubuntu:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - run: |
+          sudo apt-get update
+          sudo apt-get install libmagic1 libmagic-dev pkg-config
+
+      - run: pkg-config --debug --validate libmagic
+
+  macos:
+    runs-on: macos-12
+
+    steps:
+      - run: |
+          brew update
+          brew install libmagic
+
+      - run: pkg-config --debug --validate libmagic
+
+  windows:
+      runs-on: windows-2022
+
+      steps:
+        - run: |
+            vcpkg install update
+            vcpkg install libmagic
+
+        - run: vcpkg depend-info libmagic
