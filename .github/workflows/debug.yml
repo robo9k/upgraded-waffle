@@ -16,6 +16,9 @@ jobs:
 
       - run: pkg-config --debug --validate libmagic
 
+      - run: |
+          pkg-config --static --libs --cflags libmagic
+          pkg-config --libs --cflags libmagic
   macos:
     runs-on: macos-12
 
@@ -31,10 +34,22 @@ jobs:
 
       - run: pkg-config --debug --validate libmagic
 
+      - run: |
+          pkg-config --static --libs --cflags libmagic
+          pkg-config --libs --cflags libmagic
+
   windows:
       runs-on: windows-2022
+      env:
+        VCPKG_BINARY_SOURCES: clear;x-gha,readwrite
 
       steps:
+        - uses: actions/github-script@v6
+          with:
+            script: |
+              core.exportVariable('ACTIONS_CACHE_URL', process.env.ACTIONS_CACHE_URL || '');
+              core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
+
         - run: |
             vcpkg install update
             vcpkg install libmagic
