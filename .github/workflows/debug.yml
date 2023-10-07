@@ -55,7 +55,7 @@ jobs:
               core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
 
         - run: |
-            vcpkg install update
+            vcpkg update
             vcpkg install libmagic
 
         - run: |
